@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 enum Comparation
 {
-    biger,smaller,draw,none
+    biger, smaller, draw, none
 }
 
 enum Oparator
@@ -19,13 +19,13 @@ enum Oparator
     multiple,
     minus,
     devistion,
-    
+
 
 }
 
 public enum GameState
 {
-    easy,hard,veryhard
+    easy, hard, veryhard
 }
 
 public class GameManager : MonoBehaviour
@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour
     [Header("GameObject Panel")]
 
     [SerializeField] private GameObject caculatingMessagePanel;
-    [SerializeField] private GameObject endPanel;
+    [SerializeField] private GameObject endPanel, cardOnePanel, cardTwoPanel, quetionMarkPanel;
+    public GameObject settingPanel;
     public Image bigerButton, smallerButton, drawButton, questionMarkPanel;
 
     [Header("HangMan")]
@@ -99,6 +100,17 @@ public class GameManager : MonoBehaviour
         userChoseComparation = Comparation.none;
 
 
+        // cardOnePanel.LeanMoveLocalX(0,0.3f).setEaseInOutQuad().setFrom(-Screen.width)
+        // .setOnComplete(
+        //     () => cardTwoPanel.LeanMoveLocalX(0, 0.3f)
+        //     .setEaseInOutQuad()
+        //     .setFrom(Screen.width).setOnComplete(
+        //         () => quetionMarkPanel.LeanScale(Vector3.one, 0.2f).setEaseSpring()
+        //         )
+        //     );
+
+        settingPanel.transform.localPosition = new Vector3(0, Screen.height * 2f, 0);
+        endPanel.transform.localPosition = new Vector3(0, Screen.height * 2f, 0);
         print($"GameState - {MenuController.gameState}");
         switch (MenuController.gameState)
         {
@@ -136,14 +148,23 @@ public class GameManager : MonoBehaviour
         }
 
 
-      
+
     }
+
 
 
 
     void DealCardsHard()
     {
 
+        cardOnePanel.LeanMoveLocalX(0, 0.3f).setEaseInOutQuad().setFrom(-Screen.width)
+               .setOnComplete(
+                   () => cardTwoPanel.LeanMoveLocalX(0, 0.3f)
+                   .setEaseInOutQuad()
+                   .setFrom(Screen.width).setOnComplete(
+                       () => quetionMarkPanel.LeanScale(Vector3.one, 0.2f).setEaseSpring()
+                       )
+                   );
         Oparator oparator1 = GetRandomOparator();
         Oparator oparator2 = GetRandomOparator();
 
@@ -180,10 +201,10 @@ public class GameManager : MonoBehaviour
             caculateGroup2Image[i].sprite = caculateCardGroup2[i].sprite;
         }
 
-        caculateSum1 = Caculator(caculateCardGroup1[0].value+caculateCardGroup1[1].value, caculateCardGroup1[2].value + caculateCardGroup1[3].value , oparator1);
-        caculateSum2 = Caculator(caculateCardGroup2[0].value+caculateCardGroup2[1].value, caculateCardGroup2[2].value + caculateCardGroup2[3].value , oparator2);
+        caculateSum1 = Caculator(caculateCardGroup1[0].value + caculateCardGroup1[1].value, caculateCardGroup1[2].value + caculateCardGroup1[3].value, oparator1);
+        caculateSum2 = Caculator(caculateCardGroup2[0].value + caculateCardGroup2[1].value, caculateCardGroup2[2].value + caculateCardGroup2[3].value, oparator2);
 
-       
+
 
 
 
@@ -194,6 +215,14 @@ public class GameManager : MonoBehaviour
     void DealCardsVeryHard()
     {
 
+        cardOnePanel.LeanMoveLocalX(0, 0.3f).setEaseInOutQuad().setFrom(-Screen.width)
+               .setOnComplete(
+                   () => cardTwoPanel.LeanMoveLocalX(0, 0.3f)
+                   .setEaseInOutQuad()
+                   .setFrom(Screen.width).setOnComplete(
+                       () => quetionMarkPanel.LeanScale(Vector3.one, 0.2f).setEaseSpring()
+                       )
+                   );
         Oparator oparator1 = GetRandomOparator();
         Oparator oparator2 = GetRandomOparator();
 
@@ -234,17 +263,17 @@ public class GameManager : MonoBehaviour
         int state1_2 = 0;
         int state2_1 = 0;
         int state2_2 = 0;
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             state1_1 += caculateCardGroup1[i].value;
-            state1_2 += caculateCardGroup1[i+3].value;
+            state1_2 += caculateCardGroup1[i + 3].value;
             state2_1 += caculateCardGroup2[i].value;
             state2_2 += caculateCardGroup2[i + 3].value;
         }
 
 
-        caculateSum1 = Caculator(state1_1,state1_2, oparator1);
-        caculateSum2 = Caculator(state2_1,state2_2, oparator2);
+        caculateSum1 = Caculator(state1_1, state1_2, oparator1);
+        caculateSum2 = Caculator(state2_1, state2_2, oparator2);
 
 
 
@@ -257,7 +286,14 @@ public class GameManager : MonoBehaviour
 
     void DealCardsEasy()
     {
-       
+        cardOnePanel.LeanMoveLocalX(0, 0.3f).setEaseInOutQuad().setFrom(-Screen.width)
+        .setOnComplete(
+            () => cardTwoPanel.LeanMoveLocalX(0, 0.3f)
+            .setEaseInOutQuad()
+            .setFrom(Screen.width).setOnComplete(
+                () => quetionMarkPanel.LeanScale(Vector3.one, 0.2f).setEaseSpring()
+                )
+            );
         Oparator oparator1 = GetRandomOparator();
         Oparator oparator2 = GetRandomOparator();
 
@@ -288,29 +324,30 @@ public class GameManager : MonoBehaviour
         //caculateCardGroup1.ForEach(card => print("group1 - " + card.name));
         //caculateCardGroup2.ForEach(card => print("group2 - " + card.name));
 
-        for(int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)
         {
             caculateGroup1Image[i].sprite = caculateCardGroup1[i].sprite;
             caculateGroup2Image[i].sprite = caculateCardGroup2[i].sprite;
         }
 
-        caculateSum1 = Caculator(caculateCardGroup1[0].value, caculateCardGroup1[1].value, oparator1); 
+        caculateSum1 = Caculator(caculateCardGroup1[0].value, caculateCardGroup1[1].value, oparator1);
         caculateSum2 = Caculator(caculateCardGroup2[0].value, caculateCardGroup2[1].value, oparator2);
 
         //print($"{caculateSum1} - {caculateSum2}");
 
-        
 
-        
+
+
     }
 
-    Comparation ComputeResultCompare(int value1,int value2)
+    Comparation ComputeResultCompare(int value1, int value2)
     {
-         if(value1 > value2)
+        if (value1 > value2)
         {
             resultImage.sprite = biggerSprite;
             return Comparation.biger;
-        }else if ( value1  < value2)
+        }
+        else if (value1 < value2)
         {
             resultImage.sprite = smallerSprite;
             return Comparation.smaller;
@@ -328,15 +365,17 @@ public class GameManager : MonoBehaviour
         return (Oparator)random.Next(0, System.Enum.GetNames(typeof(Oparator)).Length);
     }
 
-    int Caculator(int value1,int value2,Oparator oparator)
+    int Caculator(int value1, int value2, Oparator oparator)
     {
-        if(oparator == Oparator.plus)
+        if (oparator == Oparator.plus)
         {
             return value1 + value2;
-        }else if(oparator == Oparator.minus)
+        }
+        else if (oparator == Oparator.minus)
         {
             return value1 - value2;
-        }else if (oparator == Oparator.multiple)
+        }
+        else if (oparator == Oparator.multiple)
         {
             return value1 * value2;
         }
@@ -344,7 +383,7 @@ public class GameManager : MonoBehaviour
         {
             return (value1 / value2);
         }
-       
+
     }
 
     Sprite OpartorToSprite(Oparator oparator)
@@ -400,16 +439,16 @@ public class GameManager : MonoBehaviour
 
         }
 
-        
+
     }
 
     IEnumerator Restart()
     {
-        
-       
 
 
-        
+
+
+
 
         caculatingMessagePanel.SetActive(true);
         AudioController.Instance.PlaySFX("loading");
@@ -464,7 +503,7 @@ public class GameManager : MonoBehaviour
         {
             DealCardsEasy();
         }
-        
+
 
 
     }
@@ -486,16 +525,16 @@ public class GameManager : MonoBehaviour
             AudioController.Instance.PlaySFX("wrong");
             if (life <= hangMan.Count)
             {
-                
-                hangMan[life - 1].SetActive(true);
+
+                hangMan[life - 1].SetActive(false);
             }
             else
             {
-                
+
                 AudioController.Instance.PlaySFX("over");
                 StartCoroutine(EndPanelShowAnimator());
                 scoreEndPanelText.text = "total score : " + score.ToString();
-                
+
             }
 
             questionMarkPanel.color = wrongColors;
@@ -510,9 +549,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         AudioController.Instance.PlaySFX("over");
         isLose = true;
-        endPanel.SetActive(true);
+        GameObject panel = endPanel.transform.GetChild(0).gameObject;
+        endPanel.LeanMoveLocalY(0, 0.3f).setFrom(Screen.height * 2f)
+        .setEaseInExpo()
+        .setOnComplete(() => panel.LeanScale(Vector3.one, 0.2f).setEaseOutBack());
+        //endPanel.SetActive(true);
         yield return new WaitForSeconds(0.2f);
-      //  hangeManAnimator.Play("idle");
+        //  hangeManAnimator.Play("idle");
 
     }
 
@@ -553,5 +596,32 @@ public class GameManager : MonoBehaviour
         }
         SceneManager.LoadScene("menu");
     }
+
+
+
+
+    public void OnOpenSettingPanel()
+    {
+        AudioController.Instance.PlaySFX("tap");
+        GameObject panel = settingPanel.transform.GetChild(0).gameObject;
+        settingPanel.LeanMoveLocalY(0, 0.3f).setFrom(Screen.height * 2f)
+        .setEaseInExpo()
+        .setOnComplete(() => panel.LeanScale(Vector3.one, 0.2f).setEaseOutBack());
+
+    }
+
+    public void OnCloseSettingPanel()
+    {
+        AudioController.Instance.PlaySFX("tap");
+        GameObject panel = settingPanel.transform.GetChild(0).gameObject;
+        panel.LeanScale(Vector3.zero, 0.2f).setEaseOutBack()
+        .setEaseInExpo()
+        .setOnComplete(() => settingPanel.LeanMoveLocalY(Screen.height * 2f, 0.3f).setFrom(0f));
+
+    }
+
+
+
+
 }
 
